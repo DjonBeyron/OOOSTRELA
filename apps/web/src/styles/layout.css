@@ -1,0 +1,121 @@
+/* Каркас: боковая панель + основная колонка. На узком экране панель — шторка. */
+.app {
+  display: flex;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.app-main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: calc(var(--topbar-h) + env(safe-area-inset-top));
+  padding: env(safe-area-inset-top) 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.topbar-brand {
+  flex: 1;
+  font-weight: 600;
+}
+
+.app-version {
+  margin-left: 4px;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: var(--sidebar-w);
+  padding: calc(12px + env(safe-area-inset-top)) 12px 12px;
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border);
+}
+
+.sidebar-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.sidebar-empty {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  border-radius: var(--radius-s);
+}
+
+.sidebar-item.is-active {
+  background: var(--bg-soft);
+}
+
+.sidebar-title {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 10px;
+  border: 0;
+  background: none;
+  text-align: left;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-del {
+  width: 32px;
+  height: 32px;
+  color: var(--text-muted);
+}
+
+.sidebar-backdrop {
+  display: none;
+}
+
+/* Десктоп: панель всегда видна, бургер не нужен. */
+@media (min-width: 768px) {
+  .topbar-menu {
+    visibility: hidden;
+  }
+}
+
+/* Телефон: панель выезжает слева (анимация №1 из 2-3 на приложение). */
+@media (max-width: 767px) {
+  .sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 20;
+    width: min(85vw, var(--sidebar-w));
+    transform: translateX(-100%);
+    transition: transform var(--dur) var(--ease);
+  }
+
+  .sidebar.is-open {
+    transform: none;
+  }
+
+  .sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 19;
+    background: var(--overlay);
+  }
+
+  .sidebar-backdrop.is-open {
+    display: block;
+  }
+}

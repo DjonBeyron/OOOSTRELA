@@ -1,0 +1,91 @@
+/* Панель диагностики (модальное окно, на телефоне — на весь экран). */
+.diag-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--overlay);
+}
+
+.diag {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: min(720px, 94vw);
+  max-height: 88dvh;
+  padding: 16px;
+  border-radius: var(--radius-m);
+  background: var(--surface);
+}
+
+.diag-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.diag-head h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.diag-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.diag-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.diag-dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.diag-dot.ok {
+  background: var(--ok);
+}
+
+.diag-dot.bad {
+  background: var(--danger);
+}
+
+.diag-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.diag-text {
+  flex: 1;
+  min-height: 120px;
+  margin: 0;
+  padding: 12px;
+  border-radius: var(--radius-s);
+  background: var(--bg-soft);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  overflow: auto;
+  user-select: text;
+}
+
+@media (max-width: 767px) {
+  .diag {
+    width: 100vw;
+    max-height: none;
+    height: 100dvh;
+    border-radius: 0;
+    padding-top: calc(16px + env(safe-area-inset-top));
+    padding-bottom: calc(16px + env(safe-area-inset-bottom));
+  }
+}

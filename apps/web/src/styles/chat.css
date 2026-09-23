@@ -1,0 +1,144 @@
+/* Экран чата: лента сообщений и поле ввода. */
+.chat {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.chat-empty {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+}
+
+.chat-empty h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.chat-empty p {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.messages-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: var(--content-w);
+  margin: 0 auto;
+  padding: 20px 16px;
+}
+
+.msg {
+  overflow-wrap: anywhere;
+}
+
+.msg-user {
+  align-self: flex-end;
+  max-width: 85%;
+  padding: 10px 16px;
+  border-radius: var(--radius-l);
+  background: var(--user-bubble);
+  white-space: pre-wrap;
+}
+
+.msg-bot {
+  align-self: stretch;
+}
+
+.msg-error {
+  padding: 8px 12px;
+  border-radius: var(--radius-s);
+  background: color-mix(in srgb, var(--danger) 12%, transparent);
+  color: var(--danger);
+  font-size: 14px;
+}
+
+.msg-stats {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.msg-thinking {
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.msg-thinking p {
+  white-space: pre-wrap;
+}
+
+/* Индикатор «модель думает» (анимация №2). */
+.typing-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--text);
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.composer {
+  padding: 8px 12px calc(12px + env(safe-area-inset-bottom));
+}
+
+.composer-box {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  max-width: var(--content-w);
+  margin: 0 auto;
+  padding: 8px 8px 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-l);
+  background: var(--surface);
+}
+
+.composer textarea {
+  flex: 1;
+  min-height: 24px;
+  max-height: 200px;
+  padding: 6px 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  resize: none;
+  font-size: 16px; /* меньше 16px — iOS зумит страницу при фокусе */
+}
+
+.send-btn {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-text);
+  font-size: 18px;
+}
+
+.send-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
