@@ -50,7 +50,7 @@
 - `src/main.tsx` — вход: подключение стилей, журнала ошибок, рендер `App`.
 - `src/app/App.tsx` — каркас: шапка (лого + «Машинный интеллект» + версия), шторка, настройки; скрытые экраны `#diag` и `#admin`.
 - `src/shared/apiBase.ts` — базовый адрес API.
-- `src/features/chat/ChatView.tsx` — экран чата: приветствие или лента + поле ввода.
+- `src/features/chat/ChatView.tsx` — экран чата: приветствие или лента, выбор модели, поле ввода.
 - `src/features/chat/MessageList.tsx` — лента с автопрокруткой вниз.
 - `src/features/chat/MessageBubble.tsx` — одно сообщение: markdown и ошибка (без данных о модели).
 - `src/features/chat/TypingArrow.tsx` — индикатор «пишет ответ»: летящая стрелка в цвет бренда.
@@ -60,6 +60,8 @@
 - `src/features/history/historyStore.ts` — чтение/запись истории в localStorage, типы сообщений.
 - `src/features/history/useConversations.ts` — список чатов, активный чат, отложенное сохранение.
 - `src/features/history/Sidebar.tsx` — шторка за бургером (на всех экранах): новый чат, история, внизу «Настройки».
+- `src/features/models/modelCatalog.ts` — наши названия моделей (МС 1.5 / МС 2 / МС 2 Фото), простые описания, какие доступны.
+- `src/features/models/ModelPicker.tsx` — выбор модели над полем ввода; описание по наведению или двойному нажатию, заглушки серые.
 - `src/features/settings/SettingsPanel.tsx` — настройки пользователя: тема, очистка истории, версия.
 - `src/features/settings/themeStore.ts` — тема (авто/светлая/тёмная): хранение и установка `data-theme`.
 - `src/features/admin/AdminPanel.tsx` — заготовка админки (`#admin`): последние запросы с рассуждениями.
@@ -73,4 +75,5 @@
 - `src/styles/markdown.css` — оформление markdown в ответах.
 - `src/styles/diag.css` — окно диагностики.
 - `src/styles/admin.css` — админ-панель.
+- `src/styles/models.css` — меню выбора модели и окошко описания.
 - `src/styles/settings.css` — окно настроек (на телефоне — лист снизу).

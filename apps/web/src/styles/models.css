@@ -1,0 +1,122 @@
+/* Выбор модели над полем ввода; меню открывается вверх. */
+.chat-tools {
+  width: 100%;
+  max-width: var(--content-w);
+  margin: 0 auto;
+  padding: 0 12px;
+}
+
+.model-picker {
+  position: relative;
+  display: inline-block;
+}
+
+.model-current {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--brand);
+  font-size: 15px;
+}
+
+.model-menu {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 0;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  width: min(320px, calc(100vw - 24px));
+  padding: 6px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-m);
+  background: var(--surface);
+  box-shadow: 0 8px 28px rgb(0 0 0 / 0.18);
+}
+
+.model-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: var(--radius-s);
+  background: none;
+  text-align: left;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.model-item.is-active {
+  background: var(--bg-soft);
+}
+
+@media (hover: hover) {
+  .model-item:hover {
+    background: var(--bg-soft);
+  }
+}
+
+.model-name {
+  color: var(--brand);
+  font-size: 17px;
+}
+
+.model-check {
+  color: var(--accent);
+}
+
+.model-short {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* Заглушки — серые, но читаются. */
+.model-item.is-stub .model-name,
+.model-item.is-stub .model-short {
+  color: var(--text-muted);
+  opacity: 0.6;
+}
+
+.model-hint {
+  padding: 6px 12px 2px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+/* Окошко «что делает модель» — крупный простой текст. */
+.model-info {
+  margin-top: 6px;
+  padding: 12px;
+  border-radius: var(--radius-s);
+  background: var(--bg-soft);
+}
+
+.model-info-title {
+  color: var(--accent);
+  font-size: 16px;
+}
+
+.model-info p {
+  margin: 4px 0 8px;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+/* ПК с мышкой: окошко справа от меню, чтобы пункты не сдвигались под курсором. */
+@media (hover: hover) and (min-width: 700px) {
+  .model-info {
+    position: absolute;
+    bottom: 0;
+    left: calc(100% + 8px);
+    width: 280px;
+    margin: 0;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    box-shadow: 0 8px 28px rgb(0 0 0 / 0.18);
+  }
+}

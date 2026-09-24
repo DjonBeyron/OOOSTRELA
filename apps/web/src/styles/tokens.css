@@ -7,14 +7,14 @@
   --font-display: 'PT Sans Narrow', 'PT Sans', 'Arial Narrow', sans-serif;
   --font-mono: ui-monospace, 'SF Mono', Consolas, 'Liberation Mono', monospace;
 
-  /* Фон приложения: светлое «сияние» в центре, как на шапке сайта. */
-  --bg-app: radial-gradient(ellipse 90% 70% at 50% 30%, #fbf5e6 0%, #efe1c2 55%, #e4d0a8 100%);
-  --bg: #f3e8d0;
-  --bg-soft: #eadbb9;
+  /* Фон приложения — как полоса сайта: тёмные песочные края, светлее к центру. */
+  --bg-app: radial-gradient(ellipse 75% 90% at 50% 35%, #ebdeba 0%, #dccaa3 50%, #c9b38c 100%);
+  --bg: #dccaa3;
+  --bg-soft: #d3bf96;
   --surface: #fffaf0;
-  --border: #d8c197;
+  --border: #c2a97d;
   --text: #3a2208;
-  --text-muted: #8a6a45;
+  --text-muted: #6f5234;
   --brand: #693700; /* коричневый меню сайта */
   --accent: #de6800; /* оранжевый заголовков сайта */
   --accent-text: #ffffff;
@@ -24,7 +24,7 @@
   --overlay: rgb(58 34 8 / 0.45);
   --logo-filter: none;
   /* Шапка — как полоса меню сайта: бежевая с осветлением в центре, коричневый текст. */
-  --topbar-bg: linear-gradient(90deg, #e0d0ac 0%, #ecddbe 50%, #e0d0ac 100%);
+  --topbar-bg: linear-gradient(90deg, #c4ae88 0%, #dccba5 30%, #eadcb8 50%, #dccba5 70%, #c4ae88 100%);
   --topbar-text: #693700;
 
   --radius-s: 8px;

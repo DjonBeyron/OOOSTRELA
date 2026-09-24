@@ -14,6 +14,7 @@ import './styles/markdown.css'
 import './styles/diag.css'
 import './styles/admin.css'
 import './styles/settings.css'
+import './styles/models.css'
 
 installClientLog()
 applyTheme(loadTheme())

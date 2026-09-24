@@ -1,11 +1,16 @@
-// Экран чата: приветствие (если чат пустой) или лента сообщений + поле ввода.
+// Экран чата: приветствие (если чат пустой) или лента сообщений, выбор модели и поле ввода.
+import { useState } from 'react'
 import type { ConversationsStore } from '../history/useConversations'
+import { DEFAULT_MODEL } from '../models/modelCatalog'
+import ModelPicker from '../models/ModelPicker'
 import Composer from './Composer'
 import MessageList from './MessageList'
 import { useChat } from './useChat'
 
 export default function ChatView({ store }: { store: ConversationsStore }) {
   const { busy, send, stop } = useChat(store)
+  // Пока работает только текстовая модель; видео и фото — заглушки (выбрать нельзя).
+  const [model, setModel] = useState(DEFAULT_MODEL)
   const messages = store.active?.messages ?? []
 
   return (
@@ -17,6 +22,9 @@ export default function ChatView({ store }: { store: ConversationsStore }) {
       ) : (
         <MessageList messages={messages} />
       )}
+      <div className="chat-tools">
+        <ModelPicker value={model} onChange={setModel} />
+      </div>
       <Composer busy={busy} onSend={send} onStop={stop} />
     </main>
   )
