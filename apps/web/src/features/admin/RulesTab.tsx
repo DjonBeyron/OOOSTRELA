@@ -84,6 +84,17 @@ export default function RulesTab() {
         </label>
       </div>
 
+      <div className="admin-card rules-global">
+        <label className="rules-field">
+          <span>
+            <b>База знаний о компании</b> — модель всегда держит этот текст в голове и отвечает по нему на любые
+            вопросы о компании своими словами. Пишите факты простым текстом; чего здесь нет — модель не выдумает.
+          </span>
+          <textarea rows={12} value={cfg.knowledge} onChange={(e) => patch({ knowledge: e.target.value })} />
+        </label>
+        <span className="admin-note">{cfg.knowledge.length} симв. (до 20 000)</span>
+      </div>
+
       <div className="admin-row">
         <h3 className="label-caps rules-title">Темы ({cfg.rules.filter((r) => r.enabled).length} вкл.)</h3>
         <div className="rules-add">

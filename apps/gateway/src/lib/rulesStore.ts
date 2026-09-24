@@ -3,6 +3,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname } from 'node:path'
 import { randomUUID } from 'node:crypto'
 import type { RulesConfig, TopicRule } from '@strela/shared'
+import { DEFAULT_KNOWLEDGE } from './defaultKnowledge'
 import { errorMessage, recordError } from './metrics'
 
 const FILE = 'data/rules.json'
@@ -13,6 +14,7 @@ const DEFAULTS: RulesConfig = {
   semanticCheck: true,
   systemGuard: true,
   defaultReply: DEFAULT_REPLY,
+  knowledge: DEFAULT_KNOWLEDGE,
   rules: [
     {
       id: 'who-are-you',
@@ -98,5 +100,7 @@ function sanitize(input: unknown): RulesConfig {
     semanticCheck: o.semanticCheck !== false,
     systemGuard: o.systemGuard !== false,
     defaultReply: str(o.defaultReply, 1000) || DEFAULT_REPLY,
+    // Поля нет (файл сохранён старой версией) — берём базу по умолчанию; пустая строка — осознанно пусто.
+    knowledge: typeof o.knowledge === 'string' ? str(o.knowledge, 20_000) : DEFAULT_KNOWLEDGE,
   }
 }

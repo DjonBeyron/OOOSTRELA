@@ -27,6 +27,8 @@ export interface RulesConfig {
   systemGuard: boolean
   /** Ответ пользователю на запретную тему по умолчанию. */
   defaultReply: string
+  /** База знаний о компании: всегда лежит в скрытой инструкции, модель отвечает по ней своими словами. */
+  knowledge: string
 }
 
 export type CheckLayer = 'keywords' | 'semantic'
