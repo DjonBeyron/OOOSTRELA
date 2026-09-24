@@ -3,6 +3,12 @@
 import type { ChatStats } from './chat'
 import type { CheckResult } from './rules'
 
+/** Один этап обработки запроса в журнале: что произошло и с каким результатом. */
+export interface RequestStage {
+  title: string
+  detail: string
+}
+
 export type RequestStatus = 'ok' | 'error' | 'aborted' | 'blocked'
 
 export interface AdminRequestRecord {
@@ -21,6 +27,8 @@ export interface AdminRequestRecord {
   check?: CheckResult
   /** Имя приложенного файла, если был. */
   attachment?: string
+  /** Этапы обработки: вход → фильтр → правила → размышление → фильтр выхода → ответ. */
+  stages?: RequestStage[]
 }
 
 export interface AdminRequestsResponse {

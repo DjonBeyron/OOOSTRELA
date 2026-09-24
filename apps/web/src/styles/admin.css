@@ -116,3 +116,55 @@
   overflow-wrap: anywhere;
   overflow-y: auto;
 }
+
+.admin-file {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Лента этапов обработки запроса. */
+.admin-stages {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 8px 0 4px;
+  padding: 10px 12px;
+  border-radius: var(--radius-s);
+  background: var(--bg-soft);
+  list-style: none;
+  font-size: 14px;
+}
+
+.admin-stages li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+}
+
+.admin-stage-title {
+  flex: none;
+  min-width: 170px;
+  color: var(--brand);
+  font-weight: 700;
+}
+
+.admin-stage-detail {
+  color: var(--text);
+}
+
+/* Ход мысли — пронумерованные шаги. */
+.admin-thought-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 50vh;
+  margin: 6px 0 0;
+  padding: 10px 10px 10px 34px;
+  border-radius: var(--radius-s);
+  background: var(--bg-soft);
+  overflow-y: auto;
+  font-size: 14px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}

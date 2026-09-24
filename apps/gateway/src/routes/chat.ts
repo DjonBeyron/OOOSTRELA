@@ -3,13 +3,15 @@
 // не уходят — только в админку.
 import { Hono } from 'hono'
 import { streamSSE } from 'hono/streaming'
-import type { ChatEvent, ChatMessage, ChatRequest, ChatStats, CheckResult } from '@strela/shared'
+import type { ChatEvent, ChatMessage, ChatRequest, ChatStats, CheckResult, RequestStatus } from '@strela/shared'
 import { config } from '../config'
 import { errorMessage, recordError, recordRequest } from '../lib/metrics'
 import { checkPrompt, systemPrompt } from '../lib/moderation'
-import { stripEmoji } from '../lib/emoji'
+import { countEmoji, stripEmoji } from '../lib/emoji'
 import { getRules } from '../lib/rulesStore'
 import { readNdjson, type OllamaChunk } from '../lib/ollama'
+import { buildStages } from '../lib/stages'
+import { cleanThinking, thinkingSteps } from '../lib/thoughtCleaner'
 import { ThinkSplitter, type Segment } from '../lib/thinkSplitter'
 
 export const chatRoute = new Hono()
@@ -50,6 +52,18 @@ chatRoute.post('/chat', async (c) => {
     let thinking = ''
     let firstTokenMs: number | null = null
     let check: CheckResult | undefined
+    let emojiRemoved = 0
+
+    // Запись в журнал: ход мысли без служебных фраз + лента этапов обработки.
+    const record = (status: RequestStatus, extra: { stats?: ChatStats; error?: string } = {}) => {
+      const cleaned = cleanThinking(thinking)
+      const stages = buildStages({
+        status, prompt, attachment, check, answer, stats: extra.stats, emojiRemoved,
+        thinkingSteps: thinkingSteps(cleaned.text),
+        removedThoughts: cleaned.removed,
+      })
+      recordRequest({ status, prompt, answer, thinking: cleaned.text, check, attachment, stages, ...extra })
+    }
 
     const handle = async (segments: Segment[]) => {
       for (const s of segments) {
@@ -64,6 +78,7 @@ chatRoute.post('/chat', async (c) => {
         } else {
           // Смайлики вырезаем, если админ запретил. Qwen после рассуждений начинает ответ с пустых строк — срезаем их.
           const clean = noEmoji ? stripEmoji(s.text) : s.text
+          if (noEmoji) emojiRemoved += countEmoji(s.text)
           const text = answer ? clean : clean.trimStart()
           if (!text) continue
           firstTokenMs ??= Date.now() - started
@@ -77,10 +92,10 @@ chatRoute.post('/chat', async (c) => {
       // Темы админки (слои 1–2) — по самому вопросу. Запрещённый вопрос в модель не уходит вообще.
       check = await checkPrompt(prompt)
       if (check.action === 'block') {
-        const reply = check.reply ?? ''
-        await send({ type: 'delta', text: reply })
+        answer = check.reply ?? ''
+        await send({ type: 'delta', text: answer })
         await send({ type: 'done' })
-        recordRequest({ status: 'blocked', prompt, answer: reply, thinking: '', check, attachment })
+        record('blocked')
         return
       }
       // Скрытая инструкция: кто модель + запретные темы (слой 3) + заготовка, если сработала.
@@ -109,18 +124,18 @@ chatRoute.post('/chat', async (c) => {
         if (chunk.done) {
           await handle(splitter.flush())
           const stats = toStats(chunk, started, firstTokenMs)
-          recordRequest({ status: 'ok', prompt, answer, thinking, stats, check, attachment })
+          record('ok', { stats })
           await send({ type: 'done' })
         }
       }
     } catch (err) {
       if (abort.signal.aborted) {
-        recordRequest({ status: 'aborted', prompt, answer, thinking, check, attachment })
+        record('aborted')
         return
       }
       const message = errorMessage(err)
       recordError('chat', message)
-      recordRequest({ status: 'error', prompt, answer, thinking, error: message, check, attachment })
+      record('error', { error: message })
       // Подробности (Ollama, модель) — только в /api/diag, пользователю — общий текст.
       await send({ type: 'error', message: 'Не удалось получить ответ. Попробуйте ещё раз.' })
     }

@@ -1,16 +1,9 @@
-// Вкладка «Запросы»: последние 50 вопросов с ответами, рассуждениями и причиной блокировки.
+// Вкладка «Запросы»: последние 50 вопросов — этапы обработки, ход мысли, ответ.
 import { useCallback, useEffect, useState } from 'react'
 import type { AdminRequestRecord } from '@strela/shared'
 import { logClient } from '../diag/clientLog'
 import { errText, fetchRequests } from './adminApi'
-import { describeCheck } from './describeCheck'
-
-const STATUS_LABEL: Record<AdminRequestRecord['status'], string> = {
-  ok: 'готово',
-  error: 'ошибка',
-  aborted: 'остановлен',
-  blocked: 'заблокирован',
-}
+import RequestCard from './RequestCard'
 
 export default function RequestsTab() {
   const [items, setItems] = useState<AdminRequestRecord[]>([])
@@ -43,33 +36,5 @@ export default function RequestsTab() {
         <RequestCard key={r.id} r={r} />
       ))}
     </section>
-  )
-}
-
-function RequestCard({ r }: { r: AdminRequestRecord }) {
-  const s = r.stats
-  return (
-    <article className={`admin-card is-${r.status}`}>
-      <div className="admin-meta">
-        {new Date(r.at).toLocaleString('ru-RU')} · {STATUS_LABEL[r.status]}
-        {s && ` · ${(s.totalMs / 1000).toFixed(1)} с · первое слово ${((s.firstTokenMs ?? 0) / 1000).toFixed(1)} с · ${s.tokensPerSec} ток/с`}
-      </div>
-      <div className="admin-prompt">{r.prompt}</div>
-      {r.attachment && <div className="admin-meta">📎 {r.attachment}</div>}
-      {r.check && r.check.action !== 'pass' && <div className="admin-block">{describeCheck(r.check)}</div>}
-      {r.thinking && (
-        <details className="admin-details">
-          <summary>Ход мысли Машинного интеллекта ({r.thinking.length} симв.)</summary>
-          <pre>{r.thinking}</pre>
-        </details>
-      )}
-      {r.answer && (
-        <details className="admin-details">
-          <summary>Ответ ({r.answer.length} симв.)</summary>
-          <pre>{r.answer}</pre>
-        </details>
-      )}
-      {r.error && <div className="msg-error">{r.error}</div>}
-    </article>
   )
 }
