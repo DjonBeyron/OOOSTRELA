@@ -1,0 +1,55 @@
+{
+  "v": 4,
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-09-23T18:00:00Z"
+  },
+  "title": "Машинный интеллект — как это работает",
+  "order": [
+    "cover",
+    "what",
+    "learn",
+    "path",
+    "control",
+    "admin",
+    "closed",
+    "scheme",
+    "plans",
+    "clusters",
+    "memory",
+    "needs"
+  ],
+  "sections": {
+    "intro": {
+      "description": "Что такое Машинный интеллект и как он обучен",
+      "start": "cover"
+    },
+    "control": {
+      "description": "Как проходит вопрос, как устроен контроль и почему данные не уходят наружу",
+      "start": "path"
+    },
+    "scheme": {
+      "description": "Общая схема: от сервера до сотрудника, фильтры и Регистратор",
+      "start": "scheme"
+    },
+    "plans": {
+      "description": "Планы: мультимодальность и новые кластеры — фото, видео, юридические консультации",
+      "start": "plans"
+    },
+    "tasks": {
+      "description": "Задачи, которые решаются сейчас, и что для этого нужно",
+      "start": "memory"
+    }
+  },
+  "faces": {
+    "pt-sans": {
+      "family": "PT Sans",
+      "href": "https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap"
+    },
+    "pt-sans-narrow": {
+      "family": "PT Sans Narrow",
+      "href": "https://fonts.googleapis.com/css2?family=PT+Sans+Narrow:wght@400;700&display=swap"
+    }
+  },
+  "designSystems": []
+}

@@ -15,6 +15,9 @@
 
 ## docs/
 - `docs/SETUP_PC.txt` — пошаговая установка ПО на ПК с RTX 5090 (драйвер, Git, Node, Ollama, модель) со ссылками и проверками.
+- `docs/presentation/README.md` — о презентации для руководства: ссылка на просмотр и скачивание PDF/PowerPoint.
+- `docs/presentation/deck.json` — порядок слайдов и разделы презентации.
+- `docs/presentation/slides/*.html` — 12 слайдов (копия исходников из редактора слайдов).
 - `docs/GIT_PC.txt` — как клонировать проект на ПК, обновлять через `update.ps1` и отдавать дебаг.
 
 ## scripts/
