@@ -83,7 +83,7 @@ C:\ProjectsStrela\OOOSTRELA дважды щёлкнуть update.cmd
   (файл apps\gateway\.env не трогается — он не в git)
 - "running scripts is disabled" — не выполнен шаг 6 из SETUP_PC.txt:
     Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
-- "WARNING: Ollama is not responding" — запустить Ollama из меню Пуск
+- "WARNING: model engine is not responding" — запустить Ollama из меню Пуск
   (иконка ламы должна появиться у часов), потом снова start.ps1.
 - Порт 8787 занят другой программой — в apps\gateway\.env поменять
   PORT=8788 и открыть http://localhost:8788

@@ -16,12 +16,12 @@ if ($old) {
     Start-Sleep -Seconds 1
 }
 
-# 2. Is Ollama running?
+# 2. Is the model engine running? (console text stays neutral: no engine or model names)
 try {
     $v = Invoke-RestMethod -Uri 'http://127.0.0.1:11434/api/version' -TimeoutSec 3
-    Write-Host "Ollama $($v.version) is running" -ForegroundColor Green
+    Write-Host "Model engine is running" -ForegroundColor Green
 } catch {
-    Write-Host 'WARNING: Ollama is not responding on 127.0.0.1:11434. Start Ollama from the Start menu.' -ForegroundColor Yellow
+    Write-Host 'WARNING: model engine is not responding. Start it from the Start menu, then run start again.' -ForegroundColor Yellow
 }
 
 # 3. Dependencies (first run only; update.ps1 reinstalls when package-lock changes).

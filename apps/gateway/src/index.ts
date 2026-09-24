@@ -30,5 +30,4 @@ serve({ fetch: app.fetch, hostname: config.host, port: config.port }, (info) => 
   console.log(`Strela gateway v${APP_VERSION}`)
   console.log(`  open:   http://localhost:${info.port}`)
   console.log(`  diag:   http://localhost:${info.port}/api/diag`)
-  console.log(`  ollama: ${config.ollamaUrl}  model: ${config.model}`)
 })
