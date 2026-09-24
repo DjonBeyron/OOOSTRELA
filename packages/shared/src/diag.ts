@@ -1,4 +1,5 @@
 // Контракт диагностики: GET /api/diag. Всё, что нужно для удалённой отладки ПК с 5090.
+import type { RequestStatus } from './admin'
 import type { ChatStats } from './chat'
 
 export interface GpuInfo {
@@ -23,7 +24,7 @@ export interface OllamaLoaded {
 
 export interface RequestRecord {
   at: string
-  status: 'ok' | 'error' | 'aborted'
+  status: RequestStatus
   stats?: ChatStats
   error?: string
   /** Длина рассуждений в символах (сами тексты — только в админке). */
@@ -46,6 +47,7 @@ export interface DiagInfo {
     listen: string
     model: string
     think: boolean
+    numCtx: number
     ollamaUrl: string
     tokenRequired: boolean
   }

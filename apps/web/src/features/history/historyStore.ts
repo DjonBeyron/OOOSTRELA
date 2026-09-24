@@ -1,10 +1,13 @@
 // История чатов в localStorage (этап 0). Позже заменим на облачную с авторизацией.
+import type { ChatAttachment } from '@strela/shared'
 import { logClient } from '../diag/clientLog'
 
 export interface StoredMessage {
   id: string
   role: 'user' | 'assistant'
   content: string
+  /** Приложенный файл (только у вопросов пользователя). */
+  attachment?: ChatAttachment
   error?: string
   pending?: boolean
 }

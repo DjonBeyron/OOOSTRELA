@@ -2,9 +2,17 @@
 
 export type ChatRole = 'system' | 'user' | 'assistant'
 
+export interface ChatAttachment {
+  name: string
+  /** Текст файла (модель читает только текст). */
+  text: string
+}
+
 export interface ChatMessage {
   role: ChatRole
   content: string
+  /** Приложенный текстовый файл — gateway вставит его в вопрос для модели. */
+  attachment?: ChatAttachment
 }
 
 export interface ChatRequest {

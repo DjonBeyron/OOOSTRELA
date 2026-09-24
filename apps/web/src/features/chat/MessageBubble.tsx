@@ -7,7 +7,12 @@ import TypingArrow from './TypingArrow'
 
 function MessageBubble({ msg }: { msg: StoredMessage }) {
   if (msg.role === 'user') {
-    return <div className="msg msg-user">{msg.content}</div>
+    return (
+      <div className="msg msg-user">
+        {msg.attachment && <div className="file-chip is-sent">📎 {msg.attachment.name}</div>}
+        {msg.content}
+      </div>
+    )
   }
   // Стрелка летит, пока модель думает и пока печатает ответ.
   const writing = msg.pending && !msg.error
@@ -23,7 +28,7 @@ function MessageBubble({ msg }: { msg: StoredMessage }) {
           </Markdown>
         </div>
       )}
-      {writing && <TypingArrow />}
+      {writing && <TypingArrow mode={msg.content ? 'writing' : 'thinking'} />}
       {msg.error && <div className="msg-error">{msg.error}</div>}
     </div>
   )

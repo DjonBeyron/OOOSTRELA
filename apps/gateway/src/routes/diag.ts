@@ -20,6 +20,7 @@ diagRoute.get('/diag', async (c) => {
       listen: `${config.host}:${config.port}`,
       model: config.model,
       think: config.think,
+      numCtx: config.numCtx,
       ollamaUrl: config.ollamaUrl,
       tokenRequired: Boolean(config.token),
     },

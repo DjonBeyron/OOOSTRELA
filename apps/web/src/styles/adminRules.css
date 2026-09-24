@@ -1,0 +1,113 @@
+/* Админка → «Запретные темы»: переключатели, карточки тем, проверка вопроса. */
+.rules-savebar {
+  position: sticky;
+  top: -12px;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--border);
+}
+
+.rules-savebar .btn-primary:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.admin-card.rules-global,
+.admin-card.rule-card,
+.admin-card.rule-tester {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-left-color: var(--brand);
+}
+
+.admin-card.rule-card.is-block {
+  border-left-color: var(--accent);
+}
+
+.admin-card.rule-card.is-guide {
+  border-left-color: var(--ok);
+}
+
+.admin-card.rule-card.is-off {
+  border-left-color: var(--border);
+  opacity: 0.7;
+}
+
+.rule-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rules-add {
+  display: flex;
+  gap: 8px;
+}
+
+.rules-title {
+  margin: 6px 0 0;
+  color: var(--brand);
+  font-size: 16px;
+}
+
+.rules-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.rules-check input {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  margin: 1px 0 0;
+  accent-color: var(--accent);
+}
+
+.rules-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rules-field > span {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.rules-field input,
+.rules-field textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-s);
+  background: var(--bg);
+  font: inherit;
+  font-size: 16px; /* меньше 16px — iOS зумит страницу при фокусе */
+  resize: vertical;
+}
+
+.rule-result {
+  padding: 8px 12px;
+  border-radius: var(--radius-s);
+  font-size: 15px;
+}
+
+.rule-result.is-block {
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+  color: var(--accent);
+}
+
+.rule-result.is-guide,
+.rule-result.is-pass {
+  background: color-mix(in srgb, var(--ok) 15%, transparent);
+  color: var(--ok);
+}

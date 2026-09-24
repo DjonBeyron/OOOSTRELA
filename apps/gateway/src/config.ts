@@ -15,6 +15,8 @@ export const config = {
   keepAlive: env.KEEP_ALIVE || '30m',
   /** Режим рассуждений: true — ответы продуманнее, но первое слово позже. Видны только в админке. */
   think: (env.THINK ?? 'true') !== 'false',
+  /** Окно контекста модели в токенах: сколько текста (диалог + файл) модель видит за раз. */
+  numCtx: Number(env.NUM_CTX) || 16384,
   token: env.GATEWAY_TOKEN || '',
   /** Собранный фронт, который gateway раздаёт как статику (путь от apps/gateway). */
   webDist: '../web/dist',

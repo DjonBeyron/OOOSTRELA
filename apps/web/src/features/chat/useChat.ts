@@ -1,6 +1,6 @@
 // Отправка сообщения: добавляет вопрос и пустой ответ, дописывает ответ по мере стрима.
 import { useCallback, useRef, useState } from 'react'
-import type { ChatEvent } from '@strela/shared'
+import type { ChatAttachment, ChatEvent } from '@strela/shared'
 import { logClient } from '../diag/clientLog'
 import { newId, titleFrom, type StoredMessage } from '../history/historyStore'
 import type { ConversationsStore } from '../history/useConversations'
@@ -12,12 +12,12 @@ export function useChat(store: ConversationsStore) {
   const { active, create, update } = store
 
   const send = useCallback(
-    async (text: string) => {
+    async (text: string, attachment?: ChatAttachment) => {
       if (busy || !text.trim()) return
-      const userMsg: StoredMessage = { id: newId(), role: 'user', content: text }
+      const userMsg: StoredMessage = { id: newId(), role: 'user', content: text, attachment }
       const botMsg: StoredMessage = { id: newId(), role: 'assistant', content: '', pending: true }
       const history = active?.messages ?? []
-      const convId = active?.id ?? create(titleFrom(text))
+      const convId = active?.id ?? create(titleFrom(attachment ? `📎 ${attachment.name}` : text))
 
       update(convId, (c) => ({
         ...c,
@@ -45,7 +45,7 @@ export function useChat(store: ConversationsStore) {
       try {
         const messages = [...history, userMsg]
           .filter((m) => m.content && !m.error)
-          .map(({ role, content }) => ({ role, content }))
+          .map(({ role, content, attachment: a }) => ({ role, content, attachment: a }))
         await streamChat({ messages }, onEvent, ctrl.signal)
       } catch (err) {
         if (!ctrl.signal.aborted) {

@@ -18,7 +18,7 @@ export function buildDebugText(diag: DiagInfo | null, diagError: string | null):
   } else {
     const g = diag.gateway
     add(`[gateway] up=${g.uptimeSec}s node=${g.node} ${g.platform} listen=${g.listen} token=${g.tokenRequired}`)
-    add(`[model] ${g.model} think=${g.think} via ${g.ollamaUrl}`)
+    add(`[model] ${g.model} think=${g.think} ctx=${g.numCtx} via ${g.ollamaUrl}`)
     const o = diag.ollama
     add(o.ok ? `[ollama] v${o.version}` : `!! [ollama] ${o.error}`)
     for (const m of o.models) add(`  installed: ${m.name} ${m.sizeGb}GB`)
