@@ -1,5 +1,4 @@
 // История чатов в localStorage (этап 0). Позже заменим на облачную с авторизацией.
-import type { ChatStats } from '@strela/shared'
 import { logClient } from '../diag/clientLog'
 
 export interface StoredMessage {
@@ -7,7 +6,6 @@ export interface StoredMessage {
   role: 'user' | 'assistant'
   content: string
   thinking?: string
-  stats?: ChatStats
   error?: string
   pending?: boolean
 }

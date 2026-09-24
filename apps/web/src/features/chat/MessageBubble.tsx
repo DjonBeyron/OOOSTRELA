@@ -1,17 +1,8 @@
-// Одно сообщение: вопрос — простым текстом, ответ — markdown + строка со временем генерации.
+// Одно сообщение: вопрос — простым текстом, ответ — markdown.
 import { memo } from 'react'
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
-import type { ChatStats } from '@strela/shared'
 import type { StoredMessage } from '../history/historyStore'
-
-function formatStats(s: ChatStats): string {
-  const parts = [`${(s.totalMs / 1000).toFixed(1)} с`]
-  if (s.firstTokenMs !== null) parts.push(`первое слово ${(s.firstTokenMs / 1000).toFixed(1)} с`)
-  if (s.tokensPerSec) parts.push(`${s.tokensPerSec} ток/с`)
-  if (s.loadMs > 500) parts.push(`загрузка модели ${(s.loadMs / 1000).toFixed(1)} с`)
-  return parts.join(' · ')
-}
 
 function MessageBubble({ msg }: { msg: StoredMessage }) {
   if (msg.role === 'user') {
@@ -37,8 +28,7 @@ function MessageBubble({ msg }: { msg: StoredMessage }) {
           </Markdown>
         </div>
       )}
-      {msg.error && <div className="msg-error">Ошибка: {msg.error}</div>}
-      {msg.stats && <div className="msg-stats">{formatStats(msg.stats)}</div>}
+      {msg.error && <div className="msg-error">{msg.error}</div>}
     </div>
   )
 }

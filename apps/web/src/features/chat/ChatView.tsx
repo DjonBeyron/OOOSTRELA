@@ -13,7 +13,6 @@ export default function ChatView({ store }: { store: ConversationsStore }) {
       {messages.length === 0 ? (
         <div className="chat-empty">
           <h1>Чем могу помочь?</h1>
-          <p>Модель работает на собственном сервере с RTX 5090</p>
         </div>
       ) : (
         <MessageList messages={messages} />

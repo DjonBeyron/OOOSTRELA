@@ -33,8 +33,7 @@ export function useChat(store: ConversationsStore) {
       const onEvent = (e: ChatEvent) => {
         if (e.type === 'delta') patchBot((m) => ({ ...m, content: m.content + e.text }))
         else if (e.type === 'thinking') patchBot((m) => ({ ...m, thinking: (m.thinking ?? '') + e.text }))
-        else if (e.type === 'done') patchBot((m) => ({ ...m, stats: e.stats }))
-        else {
+        else if (e.type === 'error') {
           patchBot((m) => ({ ...m, error: e.message }))
           logClient('error', `chat: ${e.message}`)
         }
@@ -51,7 +50,8 @@ export function useChat(store: ConversationsStore) {
       } catch (err) {
         if (!ctrl.signal.aborted) {
           const message = err instanceof Error ? err.message : String(err)
-          patchBot((m) => ({ ...m, error: message }))
+          // Технические детали — только в журнал диагностики, пользователю — общий текст.
+          patchBot((m) => ({ ...m, error: 'Нет связи с сервером. Попробуйте ещё раз.' }))
           logClient('error', `chat request: ${message}`)
         }
       } finally {

@@ -47,7 +47,7 @@ chatRoute.post('/chat', async (c) => {
         if (chunk.done) {
           const stats = toStats(chunk, started, firstTokenMs)
           recordRequest({ status: 'ok', stats })
-          await send({ type: 'done', stats })
+          await send({ type: 'done' })
         }
       }
     } catch (err) {
@@ -58,7 +58,8 @@ chatRoute.post('/chat', async (c) => {
       const message = errorMessage(err)
       recordError('chat', message)
       recordRequest({ status: 'error', error: message })
-      await send({ type: 'error', message })
+      // Подробности (Ollama, модель) — только в /api/diag, пользователю — общий текст.
+      await send({ type: 'error', message: 'Не удалось получить ответ. Попробуйте ещё раз.' })
     }
   })
 })

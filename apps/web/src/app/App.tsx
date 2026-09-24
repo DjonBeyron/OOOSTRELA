@@ -1,15 +1,29 @@
-// Каркас приложения: шапка, боковая панель с историей, чат, панель диагностики.
-import { useState } from 'react'
+// Каркас приложения: шапка, боковая панель с историей, чат.
+// Диагностика скрыта от пользователей: открывается только по адресу с #diag (для владельца).
+import { useEffect, useState } from 'react'
 import { APP_VERSION } from '@strela/shared'
 import ChatView from '../features/chat/ChatView'
 import DiagPanel from '../features/diag/DiagPanel'
 import Sidebar from '../features/history/Sidebar'
 import { useConversations } from '../features/history/useConversations'
 
+const DIAG_HASH = '#diag'
+
 export default function App() {
   const store = useConversations()
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [diagOpen, setDiagOpen] = useState(false)
+  const [diagOpen, setDiagOpen] = useState(() => location.hash === DIAG_HASH)
+
+  useEffect(() => {
+    const onHash = () => setDiagOpen(location.hash === DIAG_HASH)
+    window.addEventListener('hashchange', onHash)
+    return () => window.removeEventListener('hashchange', onHash)
+  }, [])
+
+  const closeDiag = () => {
+    history.replaceState(null, '', location.pathname + location.search)
+    setDiagOpen(false)
+  }
 
   return (
     <div className="app">
@@ -30,13 +44,10 @@ export default function App() {
             <img className="topbar-logo" src="/logo.png" alt="Стрела" width={95} height={28} />
             AI <span className="app-version">v{APP_VERSION}</span>
           </div>
-          <button className="icon-btn" onClick={() => setDiagOpen(true)} aria-label="Диагностика" title="Диагностика">
-            ⚙
-          </button>
         </header>
         <ChatView store={store} />
       </div>
-      {diagOpen && <DiagPanel onClose={() => setDiagOpen(false)} />}
+      {diagOpen && <DiagPanel onClose={closeDiag} />}
     </div>
   )
 }
