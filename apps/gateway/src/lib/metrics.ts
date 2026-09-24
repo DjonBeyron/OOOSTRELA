@@ -1,6 +1,7 @@
 // Последние запросы и ошибки в памяти — для /api/diag и /api/admin. После перезапуска gateway пусто.
 import { randomUUID } from 'node:crypto'
 import type { AdminRequestRecord, ErrorRecord, RequestRecord } from '@strela/shared'
+import { maskModelNames } from './brandFilter'
 
 const REQUEST_LIMIT = 50
 const ERROR_LIMIT = 20
@@ -17,7 +18,9 @@ function push<T>(list: T[], item: T, limit: number) {
   if (list.length > limit) list.length = limit
 }
 
+/** Обрезка длины + замена реальных названий нейросети на «Машинный интеллект». */
 function cut(text: string, max: number) {
+  text = maskModelNames(text)
   return text.length > max ? `${text.slice(0, max)}…[обрезано]` : text
 }
 

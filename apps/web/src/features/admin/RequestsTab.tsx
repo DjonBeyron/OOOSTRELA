@@ -34,7 +34,7 @@ export default function RequestsTab() {
   return (
     <section className="admin-body">
       <div className="admin-row">
-        <p className="admin-note">Последние 50 запросов с момента запуска сервера. Рассуждения видны только здесь.</p>
+        <p className="admin-note">Последние 50 запросов с момента запуска сервера. Ход мысли виден только здесь; названия технологий заменены на «Машинный интеллект».</p>
         <button className="btn" onClick={() => void refresh()}>Обновить</button>
       </div>
       {error && <div className="msg-error">Не удалось загрузить: {error}</div>}
@@ -59,7 +59,7 @@ function RequestCard({ r }: { r: AdminRequestRecord }) {
       {r.check && r.check.action !== 'pass' && <div className="admin-block">{describeCheck(r.check)}</div>}
       {r.thinking && (
         <details className="admin-details">
-          <summary>Рассуждения ({r.thinking.length} симв.)</summary>
+          <summary>Ход мысли Машинного интеллекта ({r.thinking.length} симв.)</summary>
           <pre>{r.thinking}</pre>
         </details>
       )}
