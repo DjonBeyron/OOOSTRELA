@@ -21,7 +21,9 @@
   --user-bubble: #fffaf0;
   --danger: #c0321e;
   --ok: #3f8a2e;
-  --overlay: rgb(58 34 8 / 0.45);
+  --overlay: rgb(58 34 8 / 0.2);
+  /* Шторка — в тон светлого центра фона, чтобы не «темнела» при открытии. */
+  --bg-panel: linear-gradient(180deg, #f1e7cb 0%, #e9dcba 100%);
   --logo-filter: none;
   /* Шапка — как полоса меню сайта: бежевая с осветлением в центре, коричневый текст. */
   --topbar-bg: linear-gradient(90deg, #c4ae88 0%, #dccba5 30%, #eadcb8 50%, #dccba5 70%, #c4ae88 100%);
@@ -54,7 +56,8 @@
   --user-bubble: #33251a;
   --danger: #ff7a5c;
   --ok: #7cc26a;
-  --overlay: rgb(0 0 0 / 0.6);
+  --overlay: rgb(0 0 0 / 0.35);
+  --bg-panel: linear-gradient(180deg, #2c2014 0%, #231911 100%);
   --logo-filter: brightness(2.6) saturate(1.2);
   --topbar-bg: linear-gradient(90deg, #22180e 0%, #2e2214 50%, #22180e 100%);
   --topbar-text: #e9b877;

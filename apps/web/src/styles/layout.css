@@ -97,14 +97,14 @@
   width: min(85vw, var(--sidebar-w));
   padding: calc(12px + env(safe-area-inset-top)) 12px calc(12px + env(safe-area-inset-bottom));
   border-right: 1px solid var(--border);
-  background: var(--bg);
+  background: var(--bg-panel);
   transform: translateX(-100%);
   transition: transform var(--dur) var(--ease);
 }
 
 .sidebar.is-open {
   transform: none;
-  box-shadow: 4px 0 24px rgb(0 0 0 / 0.15);
+  box-shadow: 2px 0 12px rgb(0 0 0 / 0.08);
 }
 
 .sidebar-backdrop {
