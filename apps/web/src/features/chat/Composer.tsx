@@ -3,6 +3,7 @@
 import { useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent } from 'react'
 import type { ChatAttachment } from '@strela/shared'
 import { logClient } from '../diag/clientLog'
+import { PaperclipIcon } from '../../shared/ui/icons'
 import { ACCEPT, readAttachment } from './fileAttach'
 
 interface Props {
@@ -83,7 +84,8 @@ export default function Composer({ busy, onSend, onStop }: Props) {
         <div className="composer-attach">
           {file && (
             <span className="file-chip">
-              📎 {file.name}
+              <PaperclipIcon size={15} />
+              {file.name}
               <button className="file-chip-del" onClick={() => setFile(null)} aria-label="Убрать файл">×</button>
             </span>
           )}
@@ -92,7 +94,7 @@ export default function Composer({ busy, onSend, onStop }: Props) {
       )}
       <div className="composer-box">
         <button className="attach-btn" onClick={() => fileRef.current?.click()} aria-label="Прикрепить файл" title="Прикрепить файл">
-          📎
+          <PaperclipIcon />
         </button>
         <input ref={fileRef} type="file" accept={ACCEPT} hidden onChange={(e) => void pickFile(e.target.files?.[0])} />
         <textarea

@@ -56,6 +56,7 @@
 - `src/main.tsx` — вход: подключение стилей, журнала ошибок, рендер `App`.
 - `src/app/App.tsx` — каркас: шапка (лого + «Машинный интеллект» + версия), шторка, настройки; скрытые экраны `#diag` и `#admin`.
 - `src/shared/apiBase.ts` — базовый адрес API.
+- `src/shared/ui/icons.tsx` — линейные SVG-иконки интерфейса вместо эмодзи (скрепка), цвет — от текста.
 - `src/features/chat/ChatView.tsx` — экран чата: приветствие или лента, выбор модели, поле ввода.
 - `src/features/chat/MessageList.tsx` — лента с автопрокруткой вниз.
 - `src/features/chat/MessageBubble.tsx` — одно сообщение: markdown и ошибка (без данных о модели).

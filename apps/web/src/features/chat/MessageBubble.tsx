@@ -3,13 +3,17 @@ import { memo } from 'react'
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import type { StoredMessage } from '../history/historyStore'
+import { PaperclipIcon } from '../../shared/ui/icons'
 import TypingArrow from './TypingArrow'
 
 function MessageBubble({ msg }: { msg: StoredMessage }) {
   if (msg.role === 'user') {
     return (
       <div className="msg msg-user">
-        {msg.attachment && <div className="file-chip is-sent">📎 {msg.attachment.name}</div>}
+        {msg.attachment && <div className="file-chip is-sent">
+            <PaperclipIcon size={15} />
+            {msg.attachment.name}
+          </div>}
         {msg.content}
       </div>
     )

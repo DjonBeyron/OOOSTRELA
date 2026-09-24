@@ -112,13 +112,22 @@
 
 /* Прикреплённый файл: скрепка в поле ввода, «чип» с именем файла. */
 .attach-btn {
+  display: inline-flex;
   flex: none;
+  align-items: center;
+  justify-content: center;
   width: 36px;
   height: 36px;
   border: 0;
   border-radius: 50%;
   background: none;
-  font-size: 18px;
+  color: var(--brand);
+}
+
+@media (hover: hover) {
+  .attach-btn:hover {
+    background: var(--bg-soft);
+  }
 }
 
 .composer-attach {
@@ -133,7 +142,7 @@
 .file-chip {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   max-width: 100%;
   padding: 4px 6px 4px 10px;
   border: 1px solid var(--border);
