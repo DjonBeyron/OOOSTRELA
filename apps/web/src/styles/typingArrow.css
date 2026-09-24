@@ -2,14 +2,23 @@
    Рисунок смотрит вправо; режим задаёт поворот всей стрелки (плавный переход),
    а внутреннее движение идёт вдоль острия — после поворота оно само «смотрит» куда надо. */
 .typing-arrow {
-  display: block;
-  width: 32px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   height: 32px;
   margin-top: 4px;
 }
 
+.typing-arrow-label {
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-size: 15px;
+  letter-spacing: 0.02em;
+}
+
 .typing-arrow svg {
   display: block;
+  flex: none;
   overflow: visible;
   fill: none;
   stroke: var(--accent);
@@ -19,9 +28,9 @@
   transition: transform 260ms cubic-bezier(0.3, 0.9, 0.3, 1.15);
 }
 
-/* Думает: смотрит влево, «натягивается» и тянется вперёд, хвост то появляется, то тает. */
+/* Думает: смотрит вправо, «натягивается» и тянется вперёд, хвост то появляется, то тает. */
 .typing-arrow.is-thinking svg {
-  transform: rotate(180deg);
+  transform: rotate(0deg);
 }
 
 .typing-arrow.is-thinking .typing-arrow-motion {

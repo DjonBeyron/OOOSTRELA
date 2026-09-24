@@ -59,7 +59,7 @@
 - `src/features/chat/ChatView.tsx` — экран чата: приветствие или лента, выбор модели, поле ввода.
 - `src/features/chat/MessageList.tsx` — лента с автопрокруткой вниз.
 - `src/features/chat/MessageBubble.tsx` — одно сообщение: markdown и ошибка (без данных о модели).
-- `src/features/chat/TypingArrow.tsx` — индикатор ответа: стрелка влево «натягивается», пока модель думает; вниз и пульсирует, пока пишет.
+- `src/features/chat/TypingArrow.tsx` — индикатор ответа: стрелка вправо «натягивается» с подписью «Машинный интеллект думает…»; вниз и пульсирует, пока пишет.
 - `src/features/chat/Composer.tsx` — поле ввода с авто-высотой, скрепка для файла, отправка/стоп.
 - `src/features/chat/fileAttach.ts` — чтение текстового файла (UTF-8 / Windows-1251), лимиты размера.
 - `src/features/chat/useChat.ts` — логика отправки и дописывания ответа по стриму.
@@ -82,7 +82,7 @@
 - `src/features/diag/buildDebugText.ts` — сборка текстового дебаг-блока.
 - `src/features/diag/clientLog.ts` — журнал ошибок браузера.
 - `src/styles/tokens.css` — цвета/шрифты/размеры в стиле strela27.ru (бежевый фон, коричневый, оранжевый акцент; PT Sans / PT Sans Narrow из `@fontsource`, без Google Fonts).
-- `src/styles/base.css` — сброс стилей, кнопки.
+- `src/styles/base.css` — сброс стилей, кнопки, `.visually-hidden` (текст для экранного диктора).
 - `src/styles/layout.css` — каркас, шапка, боковая панель.
 - `src/styles/chat.css` — сообщения, поле ввода, прикреплённый файл.
 - `src/styles/markdown.css` — оформление markdown в ответах.
