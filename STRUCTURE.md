@@ -11,6 +11,7 @@
 - `.gitignore` / `.gitattributes` — что не в git; концы строк (`.ps1`/`.txt`/`.cmd` — CRLF для Windows).
 - `start.cmd` — запуск сервера на ПК двойным щелчком (вызывает `scripts/start.ps1` в обход политики скриптов).
 - `update.cmd` — обновление из GitHub двойным щелчком (вызывает `scripts/update.ps1`).
+- `КАК_ОБНОВИТЬ.txt` — шпаргалка для ПК: обновление, запуск, скрытые страницы, ручной вариант команд.
 
 ## docs/
 - `docs/SETUP_PC.txt` — пошаговая установка ПО на ПК с RTX 5090 (драйвер, Git, Node, Ollama, модель) со ссылками и проверками.
@@ -18,7 +19,7 @@
 
 ## scripts/
 - `scripts/start.ps1` — запуск на ПК: гасит старый gateway, проверяет Ollama, `npm ci` при первом запуске, сборка, старт.
-- `scripts/update.ps1` — `git pull` → `npm ci` при смене lock-файла → печать версии → `start.ps1`.
+- `scripts/update.ps1` — гасит работающий gateway → `git pull` → `npm ci` при смене lock-файла → печать версии → `start.ps1`.
 - `scripts/check-lines.mjs` — лимит строк для CSS/HTML (ESLint их не видит).
 
 ## packages/shared/ — контракт между фронтом и gateway
