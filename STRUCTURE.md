@@ -47,7 +47,7 @@
 - `src/shared/apiBase.ts` — базовый адрес API.
 - `src/features/chat/ChatView.tsx` — экран чата: приветствие или лента + поле ввода.
 - `src/features/chat/MessageList.tsx` — лента с автопрокруткой вниз.
-- `src/features/chat/MessageBubble.tsx` — одно сообщение: markdown, ошибка, строка времени.
+- `src/features/chat/MessageBubble.tsx` — одно сообщение: markdown и ошибка (без данных о модели).
 - `src/features/chat/Composer.tsx` — поле ввода с авто-высотой, отправка/стоп.
 - `src/features/chat/useChat.ts` — логика отправки и дописывания ответа по стриму.
 - `src/features/chat/streamChat.ts` — fetch к `/api/chat` и разбор SSE.
