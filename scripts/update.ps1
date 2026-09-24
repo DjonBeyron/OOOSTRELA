@@ -6,6 +6,14 @@ Set-Location (Split-Path $PSScriptRoot -Parent)
 
 function Check($what) { if ($LASTEXITCODE -ne 0) { Write-Host "FAILED: $what" -ForegroundColor Red; exit 1 } }
 
+# Stop the running gateway first: Windows locks files in node_modules while it runs, so npm ci would fail.
+$old = Get-NetTCPConnection -LocalPort 8787 -State Listen -ErrorAction SilentlyContinue
+if ($old) {
+    Write-Host "`n==> Stopping running gateway (pid $($old.OwningProcess))" -ForegroundColor Cyan
+    Stop-Process -Id $old.OwningProcess -Force
+    Start-Sleep -Seconds 1
+}
+
 $before = git rev-parse --short HEAD
 $lockBefore = (Get-FileHash 'package-lock.json').Hash
 
