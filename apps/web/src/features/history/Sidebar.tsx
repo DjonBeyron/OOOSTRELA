@@ -20,9 +20,10 @@ export default function Sidebar({ open, list, activeId, onSelect, onRemove, onCl
     <>
       <div className={`sidebar-backdrop${open ? ' is-open' : ''}`} onClick={onClose} />
       <aside className={`sidebar${open ? ' is-open' : ''}`}>
-        <button className="btn btn-primary sidebar-new" onClick={() => pick(null)}>
+        <button className="btn btn-primary sidebar-new label-caps" onClick={() => pick(null)}>
           + Новый чат
         </button>
+        {list.length > 0 && <div className="sidebar-heading label-caps">История</div>}
         <nav className="sidebar-list">
           {list.length === 0 && <p className="sidebar-empty">Здесь появится история</p>}
           {list.map((c) => (

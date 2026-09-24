@@ -26,8 +26,9 @@ export default function App() {
           <button className="icon-btn topbar-menu" onClick={() => setSidebarOpen(true)} aria-label="Меню">
             ☰
           </button>
-          <div className="topbar-brand">
-            Strela AI <span className="app-version">v{APP_VERSION}</span>
+          <div className="topbar-brand label-caps">
+            <img className="topbar-logo" src="/logo.png" alt="Стрела" width={95} height={28} />
+            AI <span className="app-version">v{APP_VERSION}</span>
           </div>
           <button className="icon-btn" onClick={() => setDiagOpen(true)} aria-label="Диагностика" title="Диагностика">
             ⚙

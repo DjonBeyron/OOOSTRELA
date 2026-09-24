@@ -16,10 +16,14 @@
   text-align: center;
 }
 
+/* Как «МЫ РАДЫ ПРИВЕТСТВОВАТЬ» на сайте: жирные заглавные, оранжевый. */
 .chat-empty h1 {
   margin: 0 0 8px;
+  color: var(--accent);
   font-size: 28px;
-  font-weight: 600;
+  font-weight: 700;
+  line-height: 1.15;
+  text-transform: uppercase;
 }
 
 .chat-empty p {

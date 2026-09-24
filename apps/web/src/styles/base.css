@@ -18,6 +18,8 @@ body {
   line-height: 1.5;
   color: var(--text);
   background: var(--bg);
+  background-image: var(--bg-app);
+  background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
   overscroll-behavior: none;
@@ -45,6 +47,14 @@ button {
   border-color: var(--accent);
   background: var(--accent);
   color: var(--accent-text);
+}
+
+/* Надписи в стиле меню сайта: узкий шрифт, заглавные, разрядка. */
+.label-caps {
+  font-family: var(--font-display);
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .icon-btn {

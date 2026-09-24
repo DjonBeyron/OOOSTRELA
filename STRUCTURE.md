@@ -40,7 +40,8 @@
 ## apps/web/ — фронт (React 19 + Vite)
 - `package.json`, `tsconfig.json`, `vite.config.ts` — настройки; в dev `/api` проксируется на gateway.
 - `index.html` — HTML-оболочка, мета-теги для iOS/Android.
-- `public/favicon.svg` — временная иконка (заменим на лого strela27.ru).
+- `public/favicon.svg` — иконка вкладки: белая стрелка на оранжевом (`#de6800`).
+- `public/logo.png` — логотип «Стрела» (190×55, прозрачный фон), в шапке показывается в 28px высотой.
 - `src/main.tsx` — вход: подключение стилей, журнала ошибок, рендер `App`.
 - `src/app/App.tsx` — каркас: шапка с версией, боковая панель, чат, диагностика.
 - `src/shared/apiBase.ts` — базовый адрес API.
@@ -56,7 +57,7 @@
 - `src/features/diag/DiagPanel.tsx` — окно диагностики с кнопкой «Скопировать дебаг».
 - `src/features/diag/buildDebugText.ts` — сборка текстового дебаг-блока.
 - `src/features/diag/clientLog.ts` — журнал ошибок браузера.
-- `src/styles/tokens.css` — цвета/шрифты/размеры (временные, заменим на strela27.ru).
+- `src/styles/tokens.css` — цвета/шрифты/размеры в стиле strela27.ru (бежевый фон, коричневый, оранжевый акцент; PT Sans / PT Sans Narrow из `@fontsource`, без Google Fonts).
 - `src/styles/base.css` — сброс стилей, кнопки.
 - `src/styles/layout.css` — каркас, шапка, боковая панель.
 - `src/styles/chat.css` — сообщения и поле ввода.

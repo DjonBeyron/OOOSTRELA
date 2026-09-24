@@ -1,46 +1,58 @@
-/* Дизайн-токены. ВРЕМЕННЫЕ значения — заменим на цвета/шрифты strela27.ru.
+/* Дизайн-токены в стиле strela27.ru: тёплый бежевый фон, коричневый текст, оранжевый акцент.
    Все остальные CSS-файлы используют только эти переменные. */
 :root {
-  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-sans: 'PT Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  /* Узкий шрифт — как меню сайта: заголовки-метки, кнопки, бренд. */
+  --font-display: 'PT Sans Narrow', 'PT Sans', 'Arial Narrow', sans-serif;
   --font-mono: ui-monospace, 'SF Mono', Consolas, 'Liberation Mono', monospace;
 
-  --bg: #ffffff;
-  --bg-soft: #f5f6f8;
-  --bg-sidebar: #f0f1f4;
-  --surface: #ffffff;
-  --border: #e3e5e9;
-  --text: #16171a;
-  --text-muted: #6b7079;
-  --accent: #2b6cff;
+  /* Фон приложения: светлое «сияние» в центре, как на шапке сайта. */
+  --bg-app: radial-gradient(ellipse 90% 70% at 50% 30%, #fbf5e6 0%, #efe1c2 55%, #e4d0a8 100%);
+  --bg: #f3e8d0;
+  --bg-soft: #eadbb9;
+  --bg-sidebar: rgb(105 55 0 / 0.06);
+  --surface: #fffaf0;
+  --border: #d8c197;
+  --text: #3a2208;
+  --text-muted: #8a6a45;
+  --brand: #693700; /* коричневый меню сайта */
+  --accent: #de6800; /* оранжевый заголовков сайта */
   --accent-text: #ffffff;
-  --user-bubble: #eef1f6;
-  --danger: #d93a3a;
-  --ok: #1f9d55;
-  --overlay: rgb(0 0 0 / 0.4);
+  --user-bubble: #fffaf0;
+  --danger: #c0321e;
+  --ok: #3f8a2e;
+  --overlay: rgb(58 34 8 / 0.45);
+  --logo-filter: none;
 
   --radius-s: 8px;
   --radius-m: 14px;
   --radius-l: 22px;
   --sidebar-w: 272px;
   --content-w: 760px;
-  --topbar-h: 52px;
+  --topbar-h: 56px;
 
   --dur: 200ms;
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
+/* Тёмная тема — та же гамма, «вечерний» вариант. Логотип перекрашивается в оранжевый. */
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #16171a;
-    --bg-soft: #1f2024;
-    --bg-sidebar: #111214;
-    --surface: #1f2024;
-    --border: #2e3036;
-    --text: #ececef;
-    --text-muted: #9a9ea8;
-    --accent: #4d84ff;
-    --user-bubble: #2a2c31;
+    --bg-app: radial-gradient(ellipse 90% 70% at 50% 30%, #2e2113 0%, #1f160c 60%, #170f08 100%);
+    --bg: #1f160c;
+    --bg-soft: #2c2014;
+    --bg-sidebar: rgb(0 0 0 / 0.22);
+    --surface: #2a1e12;
+    --border: #45331f;
+    --text: #f2e6cf;
+    --text-muted: #b39a78;
+    --brand: #e9b877;
+    --accent: #f07a10;
+    --user-bubble: #33251a;
+    --danger: #ff7a5c;
+    --ok: #7cc26a;
     --overlay: rgb(0 0 0 / 0.6);
+    --logo-filter: brightness(2.6) saturate(1.2);
   }
 }
 
