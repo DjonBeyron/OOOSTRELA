@@ -25,19 +25,22 @@
 - `package.json` — пакет `@strela/shared` (раздаёт TS-исходники напрямую).
 - `src/index.ts` — реэкспорт всего пакета.
 - `src/version.ts` — `APP_VERSION`, растёт при каждом изменении кода.
-- `src/chat.ts` — типы запроса/ответа чата и событий SSE-потока, `ChatStats`.
+- `src/chat.ts` — типы запроса/ответа чата и событий SSE-потока (без рассуждений и данных о модели), `ChatStats`.
 - `src/diag.ts` — типы ответа `/api/diag` (GPU, Ollama, последние запросы/ошибки).
+- `src/admin.ts` — типы `/api/admin/requests`: вопрос, ответ, рассуждения модели, замеры.
 
 ## apps/gateway/ — сервис на ПК с 5090 (Node + Hono, запуск через tsx)
 - `package.json`, `tsconfig.json` — зависимости и настройки пакета.
-- `.env.example` — пример настроек (HOST, PORT, OLLAMA_URL, MODEL, KEEP_ALIVE, GATEWAY_TOKEN).
+- `.env.example` — пример настроек (HOST, PORT, OLLAMA_URL, MODEL, KEEP_ALIVE, THINK, GATEWAY_TOKEN).
 - `src/index.ts` — точка входа: проверка токена, маршруты `/api/*`, раздача собранного фронта.
 - `src/config.ts` — чтение `.env` и значения по умолчанию.
-- `src/routes/chat.ts` — `POST /api/chat`: стрим из Ollama → SSE, замер времени/скорости.
+- `src/routes/chat.ts` — `POST /api/chat`: стрим из Ollama → SSE; рассуждения отделяются и уходят только в админку.
 - `src/routes/diag.ts` — `GET /api/diag`: снимок состояния для отладки.
+- `src/routes/admin.ts` — `GET /api/admin/requests`: полные записи запросов с рассуждениями (для #admin).
 - `src/lib/ollama.ts` — запросы к API Ollama (версия, модели, что в памяти) и разбор NDJSON.
 - `src/lib/gpu.ts` — состояние видеокарты через `nvidia-smi`.
-- `src/lib/metrics.ts` — последние 20 запросов и ошибок в памяти.
+- `src/lib/metrics.ts` — последние 50 запросов (с текстами и рассуждениями) и 20 ошибок в памяти.
+- `src/lib/thinkSplitter.ts` — вырезает `<think>…</think>` из потока ответа, даже если теги пришли по кускам.
 
 ## apps/web/ — фронт (React 19 + Vite)
 - `package.json`, `tsconfig.json`, `vite.config.ts` — настройки; в dev `/api` проксируется на gateway.
@@ -45,17 +48,21 @@
 - `public/favicon.svg` — иконка вкладки: белая стрелка на оранжевом (`#de6800`).
 - `public/logo.png` — логотип «Стрела» (190×55, прозрачный фон), в шапке показывается в 28px высотой.
 - `src/main.tsx` — вход: подключение стилей, журнала ошибок, рендер `App`.
-- `src/app/App.tsx` — каркас: шапка (лого + версия), боковая панель, чат; скрытая диагностика по `#diag`.
+- `src/app/App.tsx` — каркас: шапка (лого + «Машинный интеллект» + версия), шторка, настройки; скрытые экраны `#diag` и `#admin`.
 - `src/shared/apiBase.ts` — базовый адрес API.
 - `src/features/chat/ChatView.tsx` — экран чата: приветствие или лента + поле ввода.
 - `src/features/chat/MessageList.tsx` — лента с автопрокруткой вниз.
 - `src/features/chat/MessageBubble.tsx` — одно сообщение: markdown и ошибка (без данных о модели).
+- `src/features/chat/TypingArrow.tsx` — индикатор «пишет ответ»: летящая стрелка в цвет бренда.
 - `src/features/chat/Composer.tsx` — поле ввода с авто-высотой, отправка/стоп.
 - `src/features/chat/useChat.ts` — логика отправки и дописывания ответа по стриму.
 - `src/features/chat/streamChat.ts` — fetch к `/api/chat` и разбор SSE.
 - `src/features/history/historyStore.ts` — чтение/запись истории в localStorage, типы сообщений.
 - `src/features/history/useConversations.ts` — список чатов, активный чат, отложенное сохранение.
-- `src/features/history/Sidebar.tsx` — боковая панель (на телефоне — шторка).
+- `src/features/history/Sidebar.tsx` — шторка за бургером (на всех экранах): новый чат, история, внизу «Настройки».
+- `src/features/settings/SettingsPanel.tsx` — настройки пользователя: тема, очистка истории, версия.
+- `src/features/settings/themeStore.ts` — тема (авто/светлая/тёмная): хранение и установка `data-theme`.
+- `src/features/admin/AdminPanel.tsx` — заготовка админки (`#admin`): последние запросы с рассуждениями.
 - `src/features/diag/DiagPanel.tsx` — окно диагностики с кнопкой «Скопировать дебаг».
 - `src/features/diag/buildDebugText.ts` — сборка текстового дебаг-блока.
 - `src/features/diag/clientLog.ts` — журнал ошибок браузера.
@@ -65,3 +72,5 @@
 - `src/styles/chat.css` — сообщения и поле ввода.
 - `src/styles/markdown.css` — оформление markdown в ответах.
 - `src/styles/diag.css` — окно диагностики.
+- `src/styles/admin.css` — админ-панель.
+- `src/styles/settings.css` — окно настроек (на телефоне — лист снизу).

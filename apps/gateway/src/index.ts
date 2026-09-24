@@ -4,6 +4,7 @@ import { serveStatic } from '@hono/node-server/serve-static'
 import { Hono } from 'hono'
 import { APP_VERSION } from '@strela/shared'
 import { config } from './config'
+import { adminRoute } from './routes/admin'
 import { chatRoute } from './routes/chat'
 import { diagRoute } from './routes/diag'
 
@@ -20,6 +21,7 @@ app.use('/api/*', async (c, next) => {
 app.get('/api/health', (c) => c.json({ ok: true, version: APP_VERSION }))
 app.route('/api', chatRoute)
 app.route('/api', diagRoute)
+app.route('/api', adminRoute)
 
 app.use('/*', serveStatic({ root: config.webDist }))
 app.get('*', serveStatic({ path: `${config.webDist}/index.html` }))

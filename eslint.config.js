@@ -13,7 +13,7 @@ export default tseslint.config(
     rules: {
       // Правило проекта: твёрдый потолок 400 строк на файл (см. CLAUDE.md).
       'max-lines': ['error', { max: 400, skipBlankLines: false, skipComments: false }],
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', ignoreRestSiblings: true }],
     },
   },
   {

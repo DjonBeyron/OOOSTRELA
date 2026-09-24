@@ -13,6 +13,8 @@ export const config = {
   ollamaUrl: (env.OLLAMA_URL || 'http://127.0.0.1:11434').replace(/\/$/, ''),
   model: env.MODEL || 'qwen3:30b-a3b',
   keepAlive: env.KEEP_ALIVE || '30m',
+  /** Режим рассуждений: true — ответы продуманнее, но первое слово позже. Видны только в админке. */
+  think: (env.THINK ?? 'true') !== 'false',
   token: env.GATEWAY_TOKEN || '',
   /** Собранный фронт, который gateway раздаёт как статику (путь от apps/gateway). */
   webDist: '../web/dist',

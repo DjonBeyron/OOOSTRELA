@@ -1,28 +1,31 @@
 // Каркас приложения: шапка, боковая панель с историей, чат.
-// Диагностика скрыта от пользователей: открывается только по адресу с #diag (для владельца).
+// Служебные экраны скрыты от пользователей и открываются только по адресу:
+//   #diag  — диагностика (железо, модель, дебаг-блок для Claude)
+//   #admin — админка (запросы и рассуждения модели)
 import { useEffect, useState } from 'react'
 import { APP_VERSION } from '@strela/shared'
+import AdminPanel from '../features/admin/AdminPanel'
 import ChatView from '../features/chat/ChatView'
 import DiagPanel from '../features/diag/DiagPanel'
 import Sidebar from '../features/history/Sidebar'
 import { useConversations } from '../features/history/useConversations'
-
-const DIAG_HASH = '#diag'
+import SettingsPanel from '../features/settings/SettingsPanel'
 
 export default function App() {
   const store = useConversations()
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [diagOpen, setDiagOpen] = useState(() => location.hash === DIAG_HASH)
+  const [settingsOpen, setSettingsOpen] = useState(false)
+  const [hash, setHash] = useState(() => location.hash)
 
   useEffect(() => {
-    const onHash = () => setDiagOpen(location.hash === DIAG_HASH)
+    const onHash = () => setHash(location.hash)
     window.addEventListener('hashchange', onHash)
     return () => window.removeEventListener('hashchange', onHash)
   }, [])
 
-  const closeDiag = () => {
+  const closeHidden = () => {
     history.replaceState(null, '', location.pathname + location.search)
-    setDiagOpen(false)
+    setHash('')
   }
 
   return (
@@ -33,6 +36,10 @@ export default function App() {
         activeId={store.activeId}
         onSelect={store.select}
         onRemove={store.remove}
+        onOpenSettings={() => {
+          setSidebarOpen(false)
+          setSettingsOpen(true)
+        }}
         onClose={() => setSidebarOpen(false)}
       />
       <div className="app-main">
@@ -42,12 +49,19 @@ export default function App() {
           </button>
           <div className="topbar-brand label-caps">
             <img className="topbar-logo" src="/logo.png" alt="Стрела" width={95} height={28} />
-            AI <span className="app-version">v{APP_VERSION}</span>
+            <span className="topbar-text">
+              <span className="topbar-title">Машинный интеллект</span>
+              <span className="app-version">v{APP_VERSION}</span>
+            </span>
           </div>
         </header>
         <ChatView store={store} />
       </div>
-      {diagOpen && <DiagPanel onClose={closeDiag} />}
+      {settingsOpen && (
+        <SettingsPanel onClose={() => setSettingsOpen(false)} onClearHistory={store.clearAll} />
+      )}
+      {hash === '#diag' && <DiagPanel onClose={closeHidden} />}
+      {hash === '#admin' && <AdminPanel onClose={closeHidden} />}
     </div>
   )
 }

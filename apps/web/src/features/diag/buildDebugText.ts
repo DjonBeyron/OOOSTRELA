@@ -18,7 +18,7 @@ export function buildDebugText(diag: DiagInfo | null, diagError: string | null):
   } else {
     const g = diag.gateway
     add(`[gateway] up=${g.uptimeSec}s node=${g.node} ${g.platform} listen=${g.listen} token=${g.tokenRequired}`)
-    add(`[model] ${g.model} via ${g.ollamaUrl}`)
+    add(`[model] ${g.model} think=${g.think} via ${g.ollamaUrl}`)
     const o = diag.ollama
     add(o.ok ? `[ollama] v${o.version}` : `!! [ollama] ${o.error}`)
     for (const m of o.models) add(`  installed: ${m.name} ${m.sizeGb}GB`)
@@ -32,7 +32,7 @@ export function buildDebugText(diag: DiagInfo | null, diagError: string | null):
     for (const r of diag.requests.slice(0, 10)) {
       const s = r.stats
       const info = s
-        ? `total=${s.totalMs}ms first=${s.firstTokenMs}ms load=${s.loadMs}ms in=${s.promptTokens} out=${s.outputTokens} ${s.tokensPerSec}t/s`
+        ? `total=${s.totalMs}ms first=${s.firstTokenMs}ms load=${s.loadMs}ms in=${s.promptTokens} out=${s.outputTokens} ${s.tokensPerSec}t/s think=${r.thinkingChars}ch`
         : (r.error ?? '')
       add(`  ${r.at} ${r.status} ${info}`)
     }

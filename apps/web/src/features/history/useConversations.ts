@@ -32,9 +32,14 @@ export function useConversations() {
     setActiveId((cur) => (cur === id ? null : cur))
   }, [])
 
+  const clearAll = useCallback(() => {
+    setList([])
+    setActiveId(null)
+  }, [])
+
   const sorted = useMemo(() => [...list].sort((a, b) => b.updatedAt - a.updatedAt), [list])
 
-  return { list: sorted, active, activeId, select: setActiveId, create, update, remove }
+  return { list: sorted, active, activeId, select: setActiveId, create, update, remove, clearAll }
 }
 
 export type ConversationsStore = ReturnType<typeof useConversations>

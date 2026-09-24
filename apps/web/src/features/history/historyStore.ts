@@ -5,7 +5,6 @@ export interface StoredMessage {
   id: string
   role: 'user' | 'assistant'
   content: string
-  thinking?: string
   error?: string
   pending?: boolean
 }
@@ -25,11 +24,18 @@ export function loadHistory(): Conversation[] {
     const raw = localStorage.getItem(KEY)
     const list = raw ? (JSON.parse(raw) as Conversation[]) : []
     // Ответ, оборванный перезагрузкой страницы, больше не «печатается».
-    return list.map((c) => ({ ...c, messages: c.messages.map((m) => ({ ...m, pending: false })) }))
+    // Старые записи (до v0.1.6) могли хранить рассуждения — вычищаем.
+    return list.map((c) => ({ ...c, messages: c.messages.map(cleanMessage) }))
   } catch (err) {
     logClient('warn', `history load failed: ${String(err)}`)
     return []
   }
+}
+
+function cleanMessage(m: StoredMessage & { thinking?: string }): StoredMessage {
+  const { thinking, ...rest } = m
+  const content = rest.content.replace(/<think>[\s\S]*?(<\/think>|$)/g, '').trimStart()
+  return { ...rest, content, pending: false }
 }
 
 export function saveHistory(list: Conversation[]) {

@@ -9,8 +9,6 @@ export interface ChatMessage {
 
 export interface ChatRequest {
   messages: ChatMessage[]
-  /** Режим «размышлений» у Qwen3. По умолчанию выключен — быстрее. */
-  think?: boolean
 }
 
 /** Время и скорость одного ответа — только для метрик в /api/diag, клиенту НЕ отдаётся. */
@@ -27,9 +25,11 @@ export interface ChatStats {
   tokensPerSec: number
 }
 
-// Правило: в поток к пользователю не попадает ничего о железе и модели (имя, скорость, VRAM).
+// Правило: в поток к пользователю не попадает ничего о железе и модели (имя, скорость, VRAM)
+// и НИКОГДА — рассуждения модели (они только в админке).
 export type ChatEvent =
-  | { type: 'thinking'; text: string }
   | { type: 'delta'; text: string }
+  /** Уже отданный текст оказался рассуждением — клиент очищает ответ и ждёт новый. */
+  | { type: 'reset' }
   | { type: 'done' }
   | { type: 'error'; message: string }

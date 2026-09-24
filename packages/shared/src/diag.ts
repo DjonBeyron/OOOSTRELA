@@ -26,6 +26,8 @@ export interface RequestRecord {
   status: 'ok' | 'error' | 'aborted'
   stats?: ChatStats
   error?: string
+  /** Длина рассуждений в символах (сами тексты — только в админке). */
+  thinkingChars: number
 }
 
 export interface ErrorRecord {
@@ -43,6 +45,7 @@ export interface DiagInfo {
     platform: string
     listen: string
     model: string
+    think: boolean
     ollamaUrl: string
     tokenRequired: boolean
   }

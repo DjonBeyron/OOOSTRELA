@@ -66,29 +66,50 @@
   font-size: 14px;
 }
 
-.msg-thinking {
-  margin-bottom: 8px;
-  font-size: 14px;
-  color: var(--text-muted);
+/* Индикатор «пишет ответ»: стрелка летит вправо, хвост тянется за ней (анимация №2). */
+.typing-arrow {
+  display: block;
+  width: 40px;
+  height: 16px;
+  margin-top: 6px;
+  overflow: hidden;
 }
 
-.msg-thinking p {
-  white-space: pre-wrap;
+.typing-arrow svg {
+  display: block;
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  animation: arrow-fly 1.1s var(--ease) infinite;
 }
 
-/* Индикатор «модель думает» (анимация №2). */
-.typing-dot {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--text);
-  animation: pulse 1s ease-in-out infinite;
+.typing-arrow-trail {
+  opacity: 0.4;
 }
 
-@keyframes pulse {
-  50% {
-    opacity: 0.25;
+@keyframes arrow-fly {
+  0% {
+    transform: translateX(-14px);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  75% {
+    transform: translateX(4px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(10px);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typing-arrow svg {
+    animation: none;
   }
 }
 

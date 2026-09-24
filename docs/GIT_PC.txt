@@ -23,11 +23,11 @@
 ---------------------------------------------------------------------
  ОДИН РАЗ: скачать проект на ПК
 ---------------------------------------------------------------------
-  cd C:\
+  cd C:\ProjectsStrela
   git clone https://github.com/DjonBeyron/OOOSTRELA.git
 
-Запуск сервера: в папке C:\OOOSTRELA дважды щёлкнуть start.cmd
-(или в PowerShell:  cd C:\OOOSTRELA  затем  .\scripts\start.ps1 ).
+Запуск сервера: в папке C:\ProjectsStrela\OOOSTRELA дважды щёлкнуть start.cmd
+(или в PowerShell:  cd C:\ProjectsStrela\OOOSTRELA  затем  .\scripts\start.ps1 ).
 Двойной щелчок по самому .ps1 открывает Блокнот — так и должно быть,
 .ps1 запускается только командой; для мыши — файлы .cmd.
 
@@ -47,13 +47,13 @@
  КАЖДЫЙ РАЗ, когда Claude сказал «запушил, обновляй»
 ---------------------------------------------------------------------
 Закрыть окно, где работает сервер (или Ctrl+C в нём). Затем в папке
-C:\OOOSTRELA дважды щёлкнуть update.cmd
-(или в PowerShell:  cd C:\OOOSTRELA  затем  .\scripts\update.ps1 ).
+C:\ProjectsStrela\OOOSTRELA дважды щёлкнуть update.cmd
+(или в PowerShell:  cd C:\ProjectsStrela\OOOSTRELA  затем  .\scripts\update.ps1 ).
 
 Скрипт сам: git pull → при необходимости npm ci → сборка → запуск.
 В конце печатает "Version now: 0.1.X" — сверь с номером, который
 назвал Claude. Этот же номер виден мелко в шапке сайта рядом с
-"Strela AI".
+«Машинный интеллект».
 
 Если в браузере старая версия — Ctrl+F5 (обновить без кэша).
 
@@ -69,6 +69,7 @@ C:\OOOSTRELA дважды щёлкнуть update.cmd
 3. Если сайт вообще не открывается — скопировать ВСЁ из окна PowerShell,
    где запускался start.ps1 / update.ps1.
 
+Админка (запросы и рассуждения модели):  http://localhost:8787/#admin
 Сырые данные без сайта:  http://localhost:8787/api/diag
 
 

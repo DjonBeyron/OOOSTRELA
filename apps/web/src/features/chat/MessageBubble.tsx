@@ -3,21 +3,16 @@ import { memo } from 'react'
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import type { StoredMessage } from '../history/historyStore'
+import TypingArrow from './TypingArrow'
 
 function MessageBubble({ msg }: { msg: StoredMessage }) {
   if (msg.role === 'user') {
     return <div className="msg msg-user">{msg.content}</div>
   }
-  const waiting = msg.pending && !msg.content && !msg.error
+  // Стрелка летит, пока модель думает и пока печатает ответ.
+  const writing = msg.pending && !msg.error
   return (
     <div className="msg msg-bot">
-      {msg.thinking && (
-        <details className="msg-thinking">
-          <summary>Размышления</summary>
-          <p>{msg.thinking}</p>
-        </details>
-      )}
-      {waiting && <span className="typing-dot" aria-label="Модель думает" />}
       {msg.content && (
         <div className="md">
           <Markdown
@@ -28,6 +23,7 @@ function MessageBubble({ msg }: { msg: StoredMessage }) {
           </Markdown>
         </div>
       )}
+      {writing && <TypingArrow />}
       {msg.error && <div className="msg-error">{msg.error}</div>}
     </div>
   )

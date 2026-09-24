@@ -1,4 +1,4 @@
-// Боковая панель: «Новый чат» и список прошлых чатов. На телефоне — выезжающая шторка.
+// Боковая шторка (открывается бургером на любом экране): «Новый чат», история, внизу — настройки.
 import type { Conversation } from './historyStore'
 
 interface Props {
@@ -7,10 +7,11 @@ interface Props {
   activeId: string | null
   onSelect: (id: string | null) => void
   onRemove: (id: string) => void
+  onOpenSettings: () => void
   onClose: () => void
 }
 
-export default function Sidebar({ open, list, activeId, onSelect, onRemove, onClose }: Props) {
+export default function Sidebar({ open, list, activeId, onSelect, onRemove, onOpenSettings, onClose }: Props) {
   const pick = (id: string | null) => {
     onSelect(id)
     onClose()
@@ -19,7 +20,7 @@ export default function Sidebar({ open, list, activeId, onSelect, onRemove, onCl
   return (
     <>
       <div className={`sidebar-backdrop${open ? ' is-open' : ''}`} onClick={onClose} />
-      <aside className={`sidebar${open ? ' is-open' : ''}`}>
+      <aside className={`sidebar${open ? ' is-open' : ''}`} aria-hidden={!open} inert={!open}>
         <button className="btn btn-primary sidebar-new label-caps" onClick={() => pick(null)}>
           + Новый чат
         </button>
@@ -43,6 +44,9 @@ export default function Sidebar({ open, list, activeId, onSelect, onRemove, onCl
             </div>
           ))}
         </nav>
+        <button className="sidebar-settings label-caps" onClick={onOpenSettings}>
+          <span aria-hidden="true">⚙</span> Настройки
+        </button>
       </aside>
     </>
   )

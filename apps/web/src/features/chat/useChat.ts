@@ -32,7 +32,7 @@ export function useChat(store: ConversationsStore) {
 
       const onEvent = (e: ChatEvent) => {
         if (e.type === 'delta') patchBot((m) => ({ ...m, content: m.content + e.text }))
-        else if (e.type === 'thinking') patchBot((m) => ({ ...m, thinking: (m.thinking ?? '') + e.text }))
+        else if (e.type === 'reset') patchBot((m) => ({ ...m, content: '' }))
         else if (e.type === 'error') {
           patchBot((m) => ({ ...m, error: e.message }))
           logClient('error', `chat: ${e.message}`)
