@@ -1,13 +1,16 @@
 // Поле ввода: растёт по высоте, Enter — отправить (на ПК), Shift+Enter — перенос строки.
 // Скрепка — прикрепить текстовый файл (модель прочитает его вместе с вопросом).
+// Если админ не разрешил файлы — вместо выбора файла окно «Загрузка файлов закрыта».
 import { useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent } from 'react'
 import type { ChatAttachment } from '@strela/shared'
 import { logClient } from '../diag/clientLog'
 import { PaperclipIcon } from '../../shared/ui/icons'
 import { ACCEPT, readAttachment } from './fileAttach'
+import FilesDeniedPopup from './FilesDeniedPopup'
 
 interface Props {
   busy: boolean
+  filesAllowed: boolean
   onSend: (text: string, attachment?: ChatAttachment) => void
   onStop: () => void
 }
@@ -23,7 +26,8 @@ function fitHeight(el: HTMLTextAreaElement | null) {
   el.style.height = `${Math.min(el.scrollHeight, MAX_HEIGHT_PX)}px`
 }
 
-export default function Composer({ busy, onSend, onStop }: Props) {
+export default function Composer({ busy, filesAllowed, onSend, onStop }: Props) {
+  const [deniedOpen, setDeniedOpen] = useState(false)
   const [text, setText] = useState('')
   const [file, setFile] = useState<ChatAttachment | null>(null)
   const [note, setNote] = useState<{ text: string; error: boolean } | null>(null)
@@ -93,7 +97,7 @@ export default function Composer({ busy, onSend, onStop }: Props) {
         </div>
       )}
       <div className="composer-box">
-        <button className="attach-btn" onClick={() => fileRef.current?.click()} aria-label="Прикрепить файл" title="Прикрепить файл">
+        <button className="attach-btn" onClick={() => (filesAllowed ? fileRef.current?.click() : setDeniedOpen(true))} aria-label="Прикрепить файл" title="Прикрепить файл">
           <PaperclipIcon />
         </button>
         <input ref={fileRef} type="file" accept={ACCEPT} hidden onChange={(e) => void pickFile(e.target.files?.[0])} />
@@ -115,6 +119,7 @@ export default function Composer({ busy, onSend, onStop }: Props) {
           </button>
         )}
       </div>
+      {deniedOpen && <FilesDeniedPopup onClose={() => setDeniedOpen(false)} />}
     </div>
   )
 }

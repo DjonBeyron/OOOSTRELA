@@ -78,6 +78,12 @@ export default function RulesTab() {
             <b>Скрытая инструкция модели</b> — «не обсуждай запретные темы», страховка, если проверки что-то пропустили
           </span>
         </label>
+        <label className="rules-check">
+          <input type="checkbox" checked={cfg.filesAllowed} onChange={(e) => patch({ filesAllowed: e.target.checked })} />
+          <span>
+            <b>Разрешить загрузку файлов</b> — выключено: по скрепке пользователь видит «Загрузку файлов нужно согласовать с директором»
+          </span>
+        </label>
         <label className="rules-field">
           <span>Ответ на запретную тему по умолчанию</span>
           <textarea rows={2} value={cfg.defaultReply} onChange={(e) => patch({ defaultReply: e.target.value })} />

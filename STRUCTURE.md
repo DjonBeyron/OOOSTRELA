@@ -37,6 +37,7 @@
 - `src/index.ts` — точка входа: проверка токена, маршруты `/api/*`, раздача собранного фронта.
 - `src/config.ts` — чтение `.env` и значения по умолчанию.
 - `src/routes/chat.ts` — `POST /api/chat`: темы админки (запрет/заготовка) → скрытая инструкция → стрим из Ollama → SSE; файл вставляется в вопрос; рассуждения — только в админку.
+- `src/routes/settings.ts` — `GET /api/settings`: публичные настройки чата (разрешены ли файлы).
 - `src/routes/diag.ts` — `GET /api/diag`: снимок состояния для отладки.
 - `src/routes/admin.ts` — `GET /api/admin/requests`: полные записи запросов; `GET/PUT /api/admin/rules` — темы; `POST /api/admin/rules/test` — проверить вопрос.
 - `src/lib/ollama.ts` — запросы к API Ollama (версия, модели, что в памяти) и разбор NDJSON.
@@ -57,12 +58,14 @@
 - `src/main.tsx` — вход: подключение стилей, журнала ошибок, рендер `App`.
 - `src/app/App.tsx` — каркас: шапка (лого + «Машинный интеллект» + версия), шторка, настройки; скрытые экраны `#diag` и `#admin`.
 - `src/shared/apiBase.ts` — базовый адрес API.
-- `src/shared/ui/icons.tsx` — линейные SVG-иконки интерфейса вместо эмодзи (скрепка), цвет — от текста.
+- `src/shared/ui/icons.tsx` — линейные SVG-иконки интерфейса вместо эмодзи (скрепка, знак запрета), цвет — от текста.
 - `src/features/chat/ChatView.tsx` — экран чата: приветствие или лента, выбор модели, поле ввода.
 - `src/features/chat/MessageList.tsx` — лента с автопрокруткой вниз.
 - `src/features/chat/MessageBubble.tsx` — одно сообщение: markdown и ошибка (без данных о модели).
 - `src/features/chat/TypingArrow.tsx` — индикатор ответа: стрелка вправо «натягивается» с подписью «Машинный интеллект думает…»; вниз и пульсирует, пока пишет.
 - `src/features/chat/Composer.tsx` — поле ввода с авто-высотой, скрепка для файла, отправка/стоп.
+- `src/features/chat/FilesDeniedPopup.tsx` — окно «Загрузка файлов закрыта» со знаком запрета (согласование с директором).
+- `src/features/chat/usePublicSettings.ts` — настройки чата с сервера; пока не пришли — файлы закрыты.
 - `src/features/chat/fileAttach.ts` — чтение текстового файла (UTF-8 / Windows-1251), лимиты размера.
 - `src/features/chat/useChat.ts` — логика отправки и дописывания ответа по стриму.
 - `src/features/chat/streamChat.ts` — fetch к `/api/chat` и разбор SSE.
@@ -93,4 +96,4 @@
 - `src/styles/adminRules.css` — вкладка «Темы и ответы».
 - `src/styles/typingArrow.css` — анимация стрелки-индикатора (думает / пишет).
 - `src/styles/models.css` — меню выбора модели и окошко описания.
-- `src/styles/settings.css` — окно настроек (на телефоне — лист снизу).
+- `src/styles/settings.css` — окна-листы: настройки и «Загрузка файлов закрыта» (на телефоне — снизу).

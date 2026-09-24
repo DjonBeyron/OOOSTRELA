@@ -7,6 +7,7 @@ import type { ChatEvent, ChatMessage, ChatRequest, ChatStats, CheckResult } from
 import { config } from '../config'
 import { errorMessage, recordError, recordRequest } from '../lib/metrics'
 import { checkPrompt, systemPrompt } from '../lib/moderation'
+import { getRules } from '../lib/rulesStore'
 import { readNdjson, type OllamaChunk } from '../lib/ollama'
 import { ThinkSplitter, type Segment } from '../lib/thinkSplitter'
 
@@ -15,9 +16,9 @@ export const chatRoute = new Hono()
 /** Потолок текста файла, который вставляем в вопрос (~20 тыс. токенов). */
 const MAX_FILE_CHARS = 60_000
 
-/** Реплика для модели: текст файла (если есть) + сам вопрос. */
-function toModelContent(m: ChatMessage): string {
-  if (!m.attachment?.text) return m.content
+/** Реплика для модели: текст файла (если есть и файлы разрешены) + сам вопрос. */
+function toModelContent(m: ChatMessage, filesAllowed: boolean): string {
+  if (!filesAllowed || !m.attachment?.text) return m.content
   const text = m.attachment.text.slice(0, MAX_FILE_CHARS)
   return `Пользователь приложил файл «${m.attachment.name}»:\n"""\n${text}\n"""\n\n${m.content}`
 }
@@ -33,9 +34,11 @@ chatRoute.post('/chat', async (c) => {
   )
   const last = incoming.findLast((m) => m.role === 'user')
   const prompt = last?.content ?? ''
-  if (!prompt.trim() && !last?.attachment) return c.json({ error: 'user message required' }, 400)
-  const dialog = incoming.map((m) => ({ role: m.role, content: toModelContent(m) }))
-  const attachment = last?.attachment?.name
+  // Файлы — только если админ разрешил: запрет проверяется здесь, а не только в интерфейсе.
+  const { filesAllowed } = getRules()
+  if (!prompt.trim()) return c.json({ error: 'user message required' }, 400)
+  const dialog = incoming.map((m) => ({ role: m.role, content: toModelContent(m, filesAllowed) }))
+  const attachment = filesAllowed ? last?.attachment?.name : undefined
 
   return streamSSE(c, async (stream) => {
     const send = (e: ChatEvent) => stream.writeSSE({ data: JSON.stringify(e) })

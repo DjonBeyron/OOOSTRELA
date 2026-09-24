@@ -15,6 +15,7 @@ const DEFAULTS: RulesConfig = {
   systemGuard: true,
   defaultReply: DEFAULT_REPLY,
   knowledge: DEFAULT_KNOWLEDGE,
+  filesAllowed: false,
   rules: [
     {
       id: 'who-are-you',
@@ -102,5 +103,6 @@ function sanitize(input: unknown): RulesConfig {
     defaultReply: str(o.defaultReply, 1000) || DEFAULT_REPLY,
     // Поля нет (файл сохранён старой версией) — берём базу по умолчанию; пустая строка — осознанно пусто.
     knowledge: typeof o.knowledge === 'string' ? str(o.knowledge, 20_000) : DEFAULT_KNOWLEDGE,
+    filesAllowed: o.filesAllowed === true,
   }
 }

@@ -29,6 +29,13 @@ export interface RulesConfig {
   defaultReply: string
   /** База знаний о компании: всегда лежит в скрытой инструкции, модель отвечает по ней своими словами. */
   knowledge: string
+  /** Можно ли пользователям прикреплять файлы (по умолчанию нет — нужно согласование с директором). */
+  filesAllowed: boolean
+}
+
+/** Публичные настройки для чата (GET /api/settings) — без тем и базы знаний. */
+export interface PublicSettings {
+  filesAllowed: boolean
 }
 
 export type CheckLayer = 'keywords' | 'semantic'

@@ -5,6 +5,16 @@ interface IconProps {
   className?: string
 }
 
+/** Знак запрета: круг с косой чертой. */
+export function ProhibitedIcon({ size = 56, className }: IconProps) {
+  return (
+    <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth={2} />
+      <path d="m4.93 4.93 14.14 14.14" stroke="currentColor" strokeWidth={2} strokeLinecap="round" />
+    </svg>
+  )
+}
+
 export function PaperclipIcon({ size = 20, className }: IconProps) {
   return (
     <svg

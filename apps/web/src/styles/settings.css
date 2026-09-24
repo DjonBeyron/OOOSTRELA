@@ -88,3 +88,36 @@
     padding-bottom: calc(16px + env(safe-area-inset-bottom));
   }
 }
+
+/* Окно «Загрузка файлов закрыта»: знак запрета, текст по центру. */
+.sheet.denied {
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.denied-icon {
+  color: var(--danger);
+}
+
+.sheet.denied h2 {
+  margin: 0;
+  color: var(--brand);
+  font-size: 20px;
+}
+
+.sheet.denied p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.sheet.denied .denied-note {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.sheet.denied .btn {
+  min-width: 160px;
+  margin-top: 4px;
+}
