@@ -8,7 +8,9 @@
 - `package-lock.json` — точные версии зависимостей (по нему `npm ci` на ПК).
 - `tsconfig.base.json` — общие настройки TypeScript (strict) для всех пакетов.
 - `eslint.config.js` — линтер, включая правило `max-lines: 400`.
-- `.gitignore` / `.gitattributes` — что не в git; концы строк (`.ps1`/`.txt` — CRLF для Windows).
+- `.gitignore` / `.gitattributes` — что не в git; концы строк (`.ps1`/`.txt`/`.cmd` — CRLF для Windows).
+- `start.cmd` — запуск сервера на ПК двойным щелчком (вызывает `scripts/start.ps1` в обход политики скриптов).
+- `update.cmd` — обновление из GitHub двойным щелчком (вызывает `scripts/update.ps1`).
 
 ## docs/
 - `docs/SETUP_PC.txt` — пошаговая установка ПО на ПК с RTX 5090 (драйвер, Git, Node, Ollama, модель) со ссылками и проверками.
