@@ -7,6 +7,7 @@ import type { ChatEvent, ChatMessage, ChatRequest, ChatStats, CheckResult } from
 import { config } from '../config'
 import { errorMessage, recordError, recordRequest } from '../lib/metrics'
 import { checkPrompt, systemPrompt } from '../lib/moderation'
+import { stripEmoji } from '../lib/emoji'
 import { getRules } from '../lib/rulesStore'
 import { readNdjson, type OllamaChunk } from '../lib/ollama'
 import { ThinkSplitter, type Segment } from '../lib/thinkSplitter'
@@ -35,7 +36,7 @@ chatRoute.post('/chat', async (c) => {
   const last = incoming.findLast((m) => m.role === 'user')
   const prompt = last?.content ?? ''
   // Файлы — только если админ разрешил: запрет проверяется здесь, а не только в интерфейсе.
-  const { filesAllowed } = getRules()
+  const { filesAllowed, noEmoji } = getRules()
   if (!prompt.trim()) return c.json({ error: 'user message required' }, 400)
   const dialog = incoming.map((m) => ({ role: m.role, content: toModelContent(m, filesAllowed) }))
   const attachment = filesAllowed ? last?.attachment?.name : undefined
@@ -61,8 +62,9 @@ chatRoute.post('/chat', async (c) => {
           answer = ''
           firstTokenMs = null
         } else {
-          // Qwen после рассуждений начинает ответ с пустых строк — срезаем их.
-          const text = answer ? s.text : s.text.trimStart()
+          // Смайлики вырезаем, если админ запретил. Qwen после рассуждений начинает ответ с пустых строк — срезаем их.
+          const clean = noEmoji ? stripEmoji(s.text) : s.text
+          const text = answer ? clean : clean.trimStart()
           if (!text) continue
           firstTokenMs ??= Date.now() - started
           answer += text

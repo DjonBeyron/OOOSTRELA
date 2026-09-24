@@ -58,6 +58,9 @@ const IDENTITY = [
 export function systemPrompt(check: CheckResult): string {
   const cfg = getRules()
   const parts = [IDENTITY]
+  if (cfg.noEmoji) {
+    parts.push('Никогда не используй в ответах эмодзи, смайлики и пиктограммы — только обычный текст и знаки препинания.')
+  }
 
   if (cfg.knowledge) {
     parts.push(

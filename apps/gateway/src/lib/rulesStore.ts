@@ -16,6 +16,7 @@ const DEFAULTS: RulesConfig = {
   defaultReply: DEFAULT_REPLY,
   knowledge: DEFAULT_KNOWLEDGE,
   filesAllowed: false,
+  noEmoji: true,
   rules: [
     {
       id: 'who-are-you',
@@ -104,5 +105,6 @@ function sanitize(input: unknown): RulesConfig {
     // Поля нет (файл сохранён старой версией) — берём базу по умолчанию; пустая строка — осознанно пусто.
     knowledge: typeof o.knowledge === 'string' ? str(o.knowledge, 20_000) : DEFAULT_KNOWLEDGE,
     filesAllowed: o.filesAllowed === true,
+    noEmoji: o.noEmoji !== false,
   }
 }

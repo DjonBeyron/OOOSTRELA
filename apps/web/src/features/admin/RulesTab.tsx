@@ -84,6 +84,12 @@ export default function RulesTab() {
             <b>Разрешить загрузку файлов</b> — выключено: по скрепке пользователь видит «Загрузку файлов нужно согласовать с директором»
           </span>
         </label>
+        <label className="rules-check">
+          <input type="checkbox" checked={cfg.noEmoji} onChange={(e) => patch({ noEmoji: e.target.checked })} />
+          <span>
+            <b>Без смайликов</b> — модель пишет только текстом; если всё же вставит эмодзи, сервер вырежет его из ответа
+          </span>
+        </label>
         <label className="rules-field">
           <span>Ответ на запретную тему по умолчанию</span>
           <textarea rows={2} value={cfg.defaultReply} onChange={(e) => patch({ defaultReply: e.target.value })} />
